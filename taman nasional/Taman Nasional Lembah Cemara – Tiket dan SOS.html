@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Taman Nasional Lorentz | Tiket dan SOS</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Figtree:wght@400;500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+:root{--bg:#f3f8f1;--card:#fff;--ink:#10281e;--mut:#55705f;--line:#d4e3d6;--pri:#2c7a4b;--onp:#fff;--soft:#e3f1e5;--sun:#ffbf47;--red:#d6372e;--c:0;--k:0;--u:0;--v:0;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif}body.lock{overflow:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.1;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}
+:focus-visible{outline:3px solid #2a8fd6;outline-offset:2px}
+#stage{position:fixed;inset:0;z-index:0}#scn,#cover{position:absolute;inset:0;width:100%;height:100%;display:block}
+#cover{position:fixed;z-index:1;opacity:calc(1.3 - var(--c)*1.3);pointer-events:none}
+#cbg{opacity:calc(1 - var(--c)*2.2)}#cl{transform:translateX(calc(var(--c)*-1100px))}#cr{transform:translateX(calc(var(--c)*1100px))}#cc{transform:translateY(calc(var(--c)*-700px));opacity:calc(1 - var(--c)*1.2)}
+#world{transform-origin:800px 430px;transition:transform 1.7s cubic-bezier(.65,0,.25,1)}
+#scn.zoom-gunung #world{transform:scale(2.3) translate(-60px,50px)}#scn.zoom-hutan #world{transform:scale(2.1) translate(470px,-220px)}#scn.zoom-savana #world{transform:scale(2) translate(160px,-230px)}
+
+.near,.pin{transition:opacity 1.1s}.near{transform:translateY(calc(var(--u)*-50px))}#scn.zoom .pin,#scn.zoom-gunung .near{opacity:0}
+.peaks{opacity:0;transition:opacity 1.4s .5s}#scn.zoom-gunung .peaks{opacity:1}
+#mg{transform:translateY(calc((1 - var(--c))*70px + var(--u)*-36px));cursor:pointer;transition:filter .3s}#mg:hover,#mg:focus-visible{filter:drop-shadow(0 0 14px #fff)}#mg,#mg:focus,#mg:focus-visible{outline:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+
+.pin{opacity:calc((var(--c) - .85)*6);pointer-events:none}.pin text{font:700 24px Figtree,sans-serif;fill:#fff;stroke:#10281e;stroke-width:5px;paint-order:stroke}
+.pulse{fill:none;stroke:#fff;stroke-width:3;animation:pl 1.8s ease-out infinite;transform-origin:800px 250px}
+
+@keyframes pl{0%{transform:scale(1);opacity:1}100%{transform:scale(4);opacity:0}}
+.cd{animation:cdr linear infinite}@keyframes cdr{from{transform:translateX(-700px)}to{transform:translateX(2600px)}}
+.tr{animation:sway 4s ease-in-out infinite}@keyframes sway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.8deg)}}
+.bl{animation:sway 2.4s ease-in-out infinite;--x:0}
+
+@keyframes wind{0%{transform:translateX(-320px);opacity:0}12%{opacity:.8}88%{opacity:.8}100%{transform:translateX(1900px);opacity:0}}
+@keyframes flip{from{transform:rotate(-40deg)}to{transform:rotate(50deg)}}
+@keyframes walk{from{transform:translateX(-320px)}to{transform:translateX(1900px)}}
+@keyframes leg{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
+@keyframes graze{0%,12%,100%{transform:rotate(0)}35%,70%{transform:rotate(52deg)}}
+@keyframes nod{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+.fl{transform-origin:0 0;animation:fl .35s ease-in-out infinite alternate}@keyframes fl{from{transform:scale(.9,.82)}to{transform:scale(1.05,1.12)}}
+.sec{height:100vh;position:relative;z-index:2;display:flex;padding:24px;pointer-events:none}.glass{pointer-events:auto}#wind,#birds,.peaks{pointer-events:none}
+.s1{align-items:center;justify-content:center;text-align:center;opacity:calc(1 - var(--c)*1.6)}
+.s1 h1{font-size:clamp(38px,8vw,84px);font-weight:800;color:#12354d;letter-spacing:-.02em}
+.s1 p{font-size:19px;color:#2c506a;margin:12px auto 0;max-width:42ch}
+.hint{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);left:0;right:0;text-align:center;color:#12354d;font-weight:700;animation:hb 1.6s ease-in-out infinite}
+
+@keyframes hb{50%{transform:translateY(8px)}}
+.s2,.s3{align-items:flex-end}
+.glass{background:rgba(12,34,28,.42);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:22px;max-width:420px;color:#fff;box-shadow:0 12px 40px rgba(0,20,15,.35)}
+.glass h2{font-size:30px;margin-bottom:6px}.glass p{margin:0 0 14px;color:#dcebe1}
+.s3 .glass{margin-left:auto}
+
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{background:var(--pri);color:var(--onp);border:0;border-radius:12px;padding:12px 18px;font-weight:700}
+.btn.gh{background:none;border:1.5px solid var(--line);color:var(--ink)}.btn.sm{padding:8px 14px;font-size:14px}
+.btn.red{background:var(--red)}.btn.sun{background:var(--sun);color:#3a2a00}
+
+.content{position:relative;z-index:3;background:transparent;padding:50px 0 80px;--ink:#fff;--mut:#d9e8de;--card:rgba(255,255,255,.13);--line:rgba(255,255,255,.3);--soft:rgba(255,255,255,.2);color:var(--ink)}.w{max-width:1040px;margin:0 auto;padding:0 18px}
+.content h2{font-size:clamp(28px,4vw,40px);margin-bottom:6px}.sub{color:var(--mut);margin:0 0 20px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:46px}
+.card{background:var(--card);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--line);border-radius:18px;padding:20px}
+.zc{display:flex;flex-direction:column;gap:8px}.zc h3{font-size:24px}.zc p{margin:0;color:var(--mut);flex:1}.price{font-weight:700}
+
+.fig{margin:0}.fimg{aspect-ratio:16/10;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.9);font-size:14px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.fimg img{width:100%;height:100%;object-fit:cover;display:block}
+.fig figcaption{font-size:13px;color:var(--mut);margin-top:6px}
+.zc .fimg{aspect-ratio:16/9}.pfig{margin:10px 0 4px}.pfig .fimg{aspect-ratio:21/9}
+
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:46px}
+.gal .fig{background:var(--card);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--line);border-radius:16px;padding:10px}
+.rules{margin:0;padding-left:20px;color:var(--mut)}
+.badge{display:inline-block;border-radius:99px;padding:2px 12px;font-size:13px;font-weight:700;background:var(--soft)}.badge.paid{background:var(--pri);color:#fff}.badge.cancelled,.badge.expired{background:var(--red);color:#fff}
+.ord{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+
+.sosb{background:linear-gradient(135deg,rgba(122,26,20,.82),rgba(214,55,46,.74));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:22px;padding:28px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.sosb a{color:#fff;font-weight:700}
+#sosf{position:fixed;left:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:40;background:var(--red);color:#fff;border:0;border-radius:99px;padding:14px 22px;font-weight:800;letter-spacing:.04em;box-shadow:0 0 0 0 rgba(214,55,46,.7);animation:sp 2s infinite}
+@keyframes sp{70%{box-shadow:0 0 0 16px rgba(214,55,46,0)}100%{box-shadow:0 0 0 0 rgba(214,55,46,0)}}
+#pn{position:fixed;top:0;right:0;bottom:0;width:min(470px,100%);background:rgba(255,255,255,.74);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);z-index:35;overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 18px) 18px calc(env(safe-area-inset-bottom,0px) + 24px);box-shadow:-10px 0 40px rgba(0,0,0,.28);visibility:hidden;transform:translateX(105%);transition:transform .5s,visibility 0s .5s}
+#pn.open{visibility:visible;transform:none;transition:transform .5s}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:10px}.ph h2{font-size:28px}
+.x{background:none;border:1px solid var(--line);border-radius:50%;width:38px;height:38px}
+.note{font-size:14px;color:var(--mut);margin:6px 0}
+label.f{display:block;font-weight:700;font-size:14px;margin:14px 0 4px}
+input[type=text],input[type=tel],input[type=date],select,textarea{width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.row b{display:block}.row small{color:var(--mut)}
+.qty{display:flex;align-items:center;gap:10px}.qty button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--pri);background:none;font-size:20px;line-height:1;color:var(--pri)}.qty span{min-width:22px;text-align:center;font-weight:700}
+.err{background:#fbe4e2;color:#a62a22;border-radius:10px;padding:10px 12px;font-weight:700;margin:12px 0}
+.tot{display:flex;justify-content:space-between;font:800 22px Fraunces,serif;border-top:2px solid var(--line);margin-top:14px;padding-top:12px}
+h4{margin:18px 0 0;font:700 15px Figtree,sans-serif}
+dialog{border:0;border-radius:20px;padding:0;width:calc(100% - 24px);max-width:440px;max-height:calc(100dvh - 24px);background:rgba(255,255,255,.8);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);color:var(--ink)}dialog::backdrop{background:rgba(5,25,20,.65)}
+
+.dh{background:linear-gradient(160deg,#10281e,#2c7a4b);color:#fff;padding:20px;text-align:center}.dh.r{background:linear-gradient(160deg,#7a1a14,var(--red))}
+.dh h3{font-size:22px}.dh code{display:block;font:700 26px/1.2 ui-monospace,monospace;letter-spacing:.08em;margin-top:6px}
+.db{padding:18px 20px 20px}.db ul{margin:6px 0 12px;padding-left:18px}.qrb{background:#fff;border-radius:14px;padding:12px;width:fit-content;margin:0 auto 12px;min-height:60px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chips label{cursor:pointer}.chips input{position:absolute;opacity:0}
+.chips span{display:block;border:1.5px solid var(--line);border-radius:99px;padding:7px 14px;font-weight:500;font-size:14px}.chips input:checked+span{border-color:var(--red);background:#fbe4e2;font-weight:700}.chips input:focus-visible+span{outline:3px solid #2a8fd6}
+.warn{background:#fff4d6;border-radius:10px;padding:10px 12px;font-size:14px;margin:0 0 6px}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;z-index:60;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s}#toast.on{opacity:1}
+footer{text-align:center;color:var(--mut);font-size:14px;margin-top:40px}
+
+.rv{opacity:0;transform:translateY(34px) scale(.98);filter:blur(6px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease;transition-delay:calc(var(--i,0)*90ms)}
+.rv.in{opacity:1;transform:none;filter:none}
+
+
+body.lock .glass,body.lock #rail{opacity:0;pointer-events:none;transition:opacity .6s}
+
+.content h2,.content .sub{text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.content h2::after{content:"";display:block;height:3px;width:64px;margin-top:10px;border-radius:3px;background:var(--sun);transform:scaleX(0);transform-origin:left;transition:transform .9s .3s}.content h2.in::after{transform:scaleX(1)}
+
+#veil{position:absolute;inset:0;background:linear-gradient(rgba(6,18,24,.15),rgba(6,18,24,.6));opacity:var(--v,0);pointer-events:none}
+#rail{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:14px;transition:opacity .6s}
+#rail button{width:12px;height:12px;border-radius:50%;border:2px solid #fff;background:transparent;padding:0;box-shadow:0 0 6px rgba(0,0,0,.5);transition:transform .3s,background .3s}#rail button.on{background:#fff;transform:scale(1.5)}
+
+.rays{transform-origin:1180px 190px;animation:rays 14s ease-in-out infinite alternate;filter:blur(8px)}@keyframes rays{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+.plume{stroke-dasharray:90 50;animation:pm 3.5s linear infinite;filter:blur(2px)}@keyframes pm{to{stroke-dashoffset:-140}}
+.wing{transform-origin:0 0;animation:fp .45s ease-in-out infinite alternate}@keyframes fp{from{transform:scaleY(1)}to{transform:scaleY(-.6)}}@keyframes tw{from{opacity:.25}to{opacity:1}}
+
+@media(max-width:600px){.glass{max-width:none;width:100%}.s3 .glass{margin-left:0}#rail{right:8px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+
+
+
+
+
+
+<body>
+
+<div id="stage"><svg id="scn" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="false">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f7fd0"/><stop offset=".45" stop-color="#7fc0ec"/><stop offset=".8" stop-color="#cfe9f6"/><stop offset="1" stop-color="#fff0d6"/></linearGradient>
+<linearGradient id="mt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c8399"/><stop offset="1" stop-color="#3f566b"/></linearGradient>
+<radialGradient id="sun"><stop offset="0" stop-color="#fff6c8"/><stop offset=".25" stop-color="#ffe9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffe9a0" stop-opacity="0"/></radialGradient>
+<linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6cb36f"/><stop offset="1" stop-color="#2f7a43"/></linearGradient>
+<radialGradient id="cg"><stop offset="0" stop-color="#fff" stop-opacity=".98"/><stop offset=".55" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+</defs>
+
+<defs><linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2a6b" stop-opacity=".85"/><stop offset=".6" stop-color="#d9648f" stop-opacity=".55"/><stop offset="1" stop-color="#ffb066" stop-opacity=".5"/></linearGradient><radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".6" stop-color="#021a22" stop-opacity="0"/><stop offset="1" stop-color="#021a22" stop-opacity=".42"/></radialGradient><linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8f4fa" stop-opacity="0"/><stop offset="1" stop-color="#e8f4fa" stop-opacity=".75"/></linearGradient></defs>
+<rect width="1600" height="900" fill="url(#sky)"/><g id="stars" style="opacity:calc((var(--u) - .55)*2.5)"></g>
+<g style="transform:translateY(calc(var(--u)*300px))"><g class="rays" style="opacity:calc(.24 - var(--u)*.22)"><path d="M1180 190L-200 560 -200 650Z M1180 190L60 -140 300 -160Z M1180 190L300 900 560 900Z M1180 190L900 900 1040 900Z" fill="#fff4c8"/></g><circle cx="1180" cy="190" r="170" fill="url(#sun)"/></g>
+<g class="cd" style="animation-duration:260s;animation-delay:-90s"><ellipse cx="0" cy="80" rx="340" ry="9" fill="#fff" opacity=".4"/><ellipse cx="260" cy="120" rx="280" ry="7" fill="#fff" opacity=".32"/><ellipse cx="-200" cy="150" rx="300" ry="8" fill="#fff" opacity=".3"/></g>
+<g id="world">
+<g id="clouds"></g>
+<g style="transform:translateY(calc(var(--u)*-14px))"><path d="M0 650L90 470 180 540 300 400 420 530 520 450 640 650Z M980 650L1100 500 1230 400 1340 520 1450 440 1600 560V650Z" fill="#c4d6e4"/><path d="M0 650L150 520 260 580 380 470 500 570 600 650Z M1000 650L1130 540 1250 480 1380 560 1480 500 1600 600V650Z" fill="#9db5c8"/><path d="M380 470L350 520 380 505 405 525Z M1250 480L1222 520 1250 508 1275 524Z M300 400L275 445 300 432 322 448Z M1230 400L1205 440 1230 430 1252 444Z" fill="#fff" opacity=".85"/></g>
+<g id="mg" tabindex="0" role="button" aria-label="Gunung bersalju. Klik untuk melihat tiket pendakian">
+
+  <path d="M380 650L520 470 600 500 700 370 780 300 800 290 840 330 900 380 960 430 1040 470 1220 650Z" fill="url(#mt)"/>
+  <path d="M800 290L700 370 600 500 520 470 380 650 770 650 795 470 806 380Z" fill="rgba(15,35,62,.38)"/><path d="M800 290L840 330 900 380 960 430 1040 470 1220 650 940 650 880 480 840 390Z" fill="rgba(255,232,180,.18)"/><path d="M800 300L770 420 740 520 700 650M812 312L852 440 842 560 884 650M760 336L702 440 652 560" stroke="rgba(18,38,60,.32)" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M780 372L768 450 790 424 802 480 812 396Z M860 372L852 420 872 404 884 440 890 384Z" fill="#fff" opacity=".9"/>
+  <path d="M700 370L730 345 760 322 800 290 830 318 850 340 880 362 900 380 870 372 850 392 820 372 795 400 770 378 745 398 725 376Z" fill="#fff"/>
+  <path d="M520 470L545 490 570 478 600 500 575 470Z" fill="#fff" opacity=".9"/><path d="M700 370L730 345 760 322 800 290 797 400 770 378 745 398 725 376Z" fill="#b9d2ea" opacity=".6"/><path class="plume" d="M806 292Q870 268 950 282T1110 270" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" opacity=".6"/></g>
+
+  <g class="peaks"><path d="M470 650L585 430 700 650Z" fill="#5d7389"/><path d="M585 430L560 475 585 462 610 480Z" fill="#fff"/><path d="M900 650L1040 410 1190 650Z" fill="#5d7389"/><path d="M1040 410L1008 465 1035 452 1062 470 1075 455Z" fill="#fff"/></g>
+<path d="M0 640Q300 560 620 620T1200 600T1600 620V900H0Z" fill="#7fb98a"/><rect x="-700" y="620" width="700" height="500" fill="#7fb98a"/><rect x="1600" y="620" width="700" height="500" fill="#7fb98a"/><path d="M0 700Q400 640 800 690T1600 680V900H0Z" fill="#5fa874"/><rect x="-700" y="690" width="700" height="500" fill="#5fa874"/><rect x="1600" y="680" width="700" height="500" fill="#5fa874"/><g class="cd" style="animation-duration:170s;animation-delay:-70s"><ellipse cx="0" cy="662" rx="380" ry="24" fill="url(#cg)" opacity=".6"/><ellipse cx="480" cy="648" rx="300" ry="20" fill="url(#cg)" opacity=".5"/><ellipse cx="900" cy="668" rx="360" ry="22" fill="url(#cg)" opacity=".55"/></g><g class="cd" style="animation-duration:230s;animation-delay:-150s"><ellipse cx="0" cy="712" rx="420" ry="22" fill="url(#cg)" opacity=".45"/><ellipse cx="620" cy="700" rx="340" ry="18" fill="url(#cg)" opacity=".4"/></g>
+  <g class="near"><rect x="-700" y="745" width="700" height="400" fill="#4c9a56"/><rect x="1600" y="745" width="700" height="400" fill="#4c9a56"/><rect x="-700" y="880" width="3000" height="300" fill="#2f7a43"/><path d="M0 760Q500 720 900 750T1600 740V900H0Z" fill="url(#gr)"/>
+  <g id="forest"></g><g id="deers"></g>
+  <g id="camp" style="opacity:var(--k)">
+  <g transform="translate(750,812)"><path d="M-70 0L0-90 70 0Z" fill="#e8742f"/><path d="M-70 0L0-90 10 0Z" fill="#f08a45"/><path d="M0-90L-14 0 22 0Z" fill="#3a2a1c"/></g>
+  <g transform="translate(860,832)"><rect x="-18" y="-2" width="36" height="7" rx="3" fill="#5a3b22"/><path class="fl" d="M0 0C-14-10-8-26 0-40 8-26 14-10 0 0Z" fill="#ffb02e"/><path class="fl" d="M0 0C-7-6-4-14 0-22 4-14 7-6 0 0Z" fill="#fff0a0"/></g>
+  <g transform="translate(985,868) scale(1.1)"><g style="transform:translateX(calc((1 - var(--k))*520px))"><path d="M-90-10L-90-38-60-44-38-72 40-72 66-44 90-38 90-10Z" fill="#c9372e"/><path d="M-34-66L-52-44-6-44-6-66Z M2-66L2-44 56-44 38-66Z" fill="#cde9f7"/><rect x="-38" y="-78" width="80" height="5" fill="#333"/><rect x="-30" y="-92" width="60" height="14" rx="3" fill="#6b4a2f"/><circle cx="-88" cy="-26" r="5" fill="#ffe27a"/><circle cx="-50" cy="-8" r="15" fill="#1b1b1b"/><circle cx="-50" cy="-8" r="6" fill="#999"/><circle cx="52" cy="-8" r="15" fill="#1b1b1b"/><circle cx="52" cy="-8" r="6" fill="#999"/></g></g></g>
+  <g id="grass"></g></g>
+  <g class="pin"><circle cx="800" cy="250" r="9" fill="#fff"/><circle class="pulse" cx="800" cy="250" r="9"/><text x="800" y="222" text-anchor="middle">Klik gunung: tiket pendakian</text></g>
+  <g id="birds"></g><g id="wind"></g>
+  </g><rect width="1600" height="900" fill="url(#dusk)" style="opacity:calc(var(--u)*.55);pointer-events:none"/><rect width="1600" height="900" fill="url(#vig)" style="pointer-events:none"/></svg>
+<svg id="cover" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect id="cbg" width="1600" height="900" fill="#e4f0f7"/><g id="cl"></g><g id="cr"></g><g id="cc"></g></svg><div id="veil"></div></div>
+
+<section class="sec s1"><div><h1>Taman Nasional Lorentz</h1><p>Tiket masuk dan bantuan SOS dalam satu tempat.</p></div><div class="hint">Gulir ke bawah</div></section>
+<section class="sec s2"><div class="glass"><h2>Selamat datang di lembah</h2><p>Pilih tujuanmu. Klik gunung di latar untuk melihat jalur pendakian, atau pilih zona lain.</p><div class="acts"><button class="btn" data-open="hutan">Tiket hutan</button><button class="btn" data-open="savana">Tiket savana</button></div></div></section>
+<section class="sec s3"><div class="glass"><h2>Bermalam di bawah bintang</h2><p>Area camp tersedia untuk pendaki dan pengunjung zona hutan. Lihat semua tiket di bawah.</p><button class="btn sun" id="toT">Lihat tiket</button></div></section>
+
+<main class="content"><div class="w">
+  <section id="tiket"><h2>Pilih zona kunjungan</h2><p class="sub">Hutan dan savana berupa tiket harian. Gunung berbeda: ada jalur, malam menginap, dan kontak darurat.</p><div class="cards" id="zc"></div></section>
+  <section id="galeri"><h2>Galeri taman</h2><p class="sub">Suasana di dalam taman nasional.</p><div class="gal" id="gal"></div></section>
+  <section><h2>Aturan singkat</h2><div class="card" style="margin:12px 0 46px"><ul class="rules"><li>Anak di bawah 3 tahun gratis dan wajib didampingi dewasa.</li><li>Dilarang memberi makan satwa dan membuang sampah.</li><li>Pendakian wajib mendaftar paling lambat H-1 dan memiliki kontak darurat.</li><li>Pembatalan bisa dilakukan sampai H-1 dengan dana kembali penuh.</li></ul></div></section>
+  <section id="pesanan"><h2>Tiket saya</h2><p class="sub">Tersimpan di browser ini.</p><div id="ol"></div></section>
+  <section style="margin-top:46px"><div class="sosb"><div><h2 style="color:#fff">Butuh bantuan?</h2><p style="margin:6px 0 0">Laporkan keadaan darurat bersama lokasimu. Bahaya nyata: hubungi <a href="tel:112">112</a> atau Basarnas <a href="tel:115">115</a>.</p></div><button class="btn sun" data-sos>Buka SOS</button></div></section>
+  
+  <footer>Ini demo: pembayaran dan laporan SOS disimulasikan, data tersimpan di browser ini saja.</footer></div></main>
+
+<button id="sosf" data-sos aria-label="Buka bantuan SOS">SOS</button>
+<nav id="rail" aria-label="Navigasi bagian"></nav>
+<aside id="pn" aria-labelledby="pt"></aside>
+<dialog id="tkd" aria-label="E-tiket"></dialog>
+<dialog id="sosd" aria-label="Bantuan SOS"><div class="dh r"><h3>Bantuan SOS</h3></div><div class="db">
+  <p class="warn">Bahaya nyata? Hubungi <a href="tel:112">112</a> atau Basarnas <a href="tel:115">115</a> sekarang. Laporan ini demo dan belum menghubungi petugas sungguhan.</p>
+
+  <label class="f">Apa yang terjadi?</label><div class="chips" id="stype"></div>
+  <label class="f">Lokasi</label><button class="btn gh sm" id="gl">Bagikan lokasi saya</button><div class="note" id="locv"></div>
+  <label class="f" for="sloc">Patokan lokasi</label><input type="text" id="sloc" placeholder="Contoh: dekat pos 2 jalur Cemara">
+  <label class="f" for="sph">Nomor yang bisa dihubungi</label><input type="tel" id="sph" placeholder="08xxxxxxxxxx">
+  <label class="f" for="sdesc">Keterangan singkat (opsional)</label><textarea id="sdesc" rows="2"></textarea>
+
+  
+<div class="err" id="serr" role="alert" hidden></div>
+<div class="acts" style="margin-top:14px"><button class="btn red" id="ssend">Kirim laporan SOS</button><button class="btn gh" id="sclose">Tutup</button></div><div id="sres" aria-live="polite"></div></div></dialog>
+<div id="toast" role="status">
+
+</div>
+
+
+
+
+
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rp=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0'),ds=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const addD=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const todayS=()=>ds(new Date());
+const minD=z=>{const n=new Date(),b=new Date(n.getFullYear(),n.getMonth(),n.getDate());return addD(b,(z==='gunung'||n.getHours()>=15)?1:0)};
+const long=s=>pd(s).toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const kind=s=>{if(!s)return 0;const g=pd(s).getDay();return(g===0||g===6||(s>='2026-12-20'&&s<='2027-01-03'))?1:0};
+const tel=s=>/^(\+62|62|0)8[0-9]{8,12}$/.test(s.replace(/[\s-]/g,''));
+
+
+const FOTO={
+ hutan:{src:'assets/foto hutan.jpg',alt:'Jalur pinus di Hutan Lindung',cap:'Jalur pinus di Hutan Lindung'},
+ savana:{src:'assets/foto savana.jpg',alt:'Rusa merumput di Savana Terbuka',cap:'Rusa merumput di Savana Terbuka'},
+ gunung:{src:'assets/foto gunung.jpg',alt:'Puncak bersalju dari jalur pendakian',cap:'Puncak bersalju dari jalur pendakian'},
+ galeri:[
+  {src:'assets/galeri air terjun.jpg',alt:'Air terjun kecil di dalam hutan',cap:'Air terjun kecil di dalam hutan'},
+  {src:'assets/galeri matahari terbit.jpg',alt:'Matahari terbit di atas lembah',cap:'Matahari terbit di atas lembah'},
+  {src:'assets/galeri camp.webp ',alt:'Area camp di tepi padang rumput',cap:'Area camp di tepi padang rumput'},
+  {src:'assets/galeri kabut.avif',alt:'Kabut pagi di kaki gunung',cap:'Kabut pagi di kaki gunung'}]};
+const fig=(f,cls,bg)=>`<figure class="fig ${cls||''}"><div class="fimg" style="background:${bg||'linear-gradient(135deg,#3f566b,#9db5c8)'}">${f.src?`<img src="${esc(f.src)}" alt="${esc(f.alt)}" loading="lazy">`:'<span>Foto menyusul</span>'}</div><figcaption>${esc(f.cap)}</figcaption></figure>`;
+const Z={
+ hutan:{n:'Hutan Lindung',d:'Jalur pinus, air terjun kecil, dan area camp. Sekitar 4 jam jelajah.',cap:300,bg:'linear-gradient(135deg,#1f6a3c,#7bbf5a)',t:[['dew','Dewasa','Usia 12 tahun ke atas',25000,35000],['ank','Anak','Usia 3–11 tahun',15000,20000],['asing','Wisatawan mancanegara','Per orang',150000,150000]],add:[['guide','Pemandu lokal','Per rombongan',100000],['bino','Sewa teropong','Per unit',30000]]},
+ savana:{n:'Savana Terbuka',d:'Padang rumput luas tempat rusa dan satwa liar merumput.',cap:200,bg:'linear-gradient(135deg,#c9a14a,#e8d27c)',t:[['dew','Dewasa','Usia 12 tahun ke atas',30000,45000],['ank','Anak','Usia 3–11 tahun',20000,30000],['asing','Wisatawan mancanegara','Per orang',175000,175000]],add:[['jeep','Jeep safari','Maks. 6 orang, per unit',350000],['bino','Sewa teropong','Per unit',30000]]},
+ gunung:{n:'Pendakian Gunung',d:'Jalur menuju puncak bersalju. Wajib daftar H-1 dan punya kontak darurat.',cap:80,bg:'linear-gradient(135deg,#3f566b,#cfe3f2)',t:[['dew','Pendaki','Usia 15 tahun ke atas, per hari',40000,55000],['asing','Pendaki mancanegara','Per hari',200000,200000]],add:[['porter','Porter','Per trip',250000],['tenda','Sewa tenda 2 orang','Per malam',80000,1]]}
+};
+const JL={cemara:'Jalur Cemara (sedang, sekitar 6 jam)',salju:'Jalur Salju (sulit, sekitar 9 jam)'};
+const sum=q=>Object.values(q).reduce((a,b)=>a+b,0);
+const hs=s=>{let x=7;for(const c of s)x=(x*31+c.charCodeAt(0))>>>0;return x};
+let mem=[];const KEY='tn_orders_v1';
+const load=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):mem}catch(e){return mem}};
+const save=o=>{mem=o;try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}};
+const baseS=(z,s)=>{const h=hs(z+s),c=Z[z].cap;return h%17===0?c:Math.min(Math.floor(c*(.25+(h%50)/100+(kind(s)?.15:0))),c-5)};
+const live=(z,s)=>load().filter(o=>o.zone===z&&o.date===s&&(o.status==='paid'||o.status==='used'));
+const remain=(z,s)=>Math.max(0,Z[z].cap-baseS(z,s)-live(z,s).reduce((a,o)=>a+sum(o.q),0));
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2400)}
+
+/* scene */
+const R=document.documentElement;let tk=false;
+const cl01=x=>Math.max(0,Math.min(1,x));
+const SEC=[['Awan','.s1'],['Lembah','.s2'],['Camp','.s3'],['Tiket','#tiket'],['Tiket saya','#pesanan'],['SOS','.sosb']];
+      $('#rail').innerHTML=SEC.map(([n],i)=>`<button title="${n}" aria-label="${n}" data-i="${i}"></button>`).join('');
+      $('#rail').addEventListener('click',e=>{const b=e.target.closest('button');if(b)$(SEC[b.dataset.i][1]).scrollIntoView({behavior:'smooth'})});
+  function upd(){tk=false;const t=scrollY/innerHeight,mh=R.scrollHeight-innerHeight;R.style.setProperty('--c',cl01(t/.9));R.style.setProperty('--k',cl01((t-1.3)/.7));R.style.setProperty('--u',mh>0?cl01(scrollY/mh):0);R.style.setProperty('--v',cl01((t-2.2)/.8));
+    let a=0;SEC.forEach(([n,s],i)=>{if($(s).getBoundingClientRect().top<=innerHeight*.5)a=i});$$('#rail button').forEach((b,i)=>b.classList.toggle('on',i===a))}
+addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(upd)}},{passive:true});addEventListener('resize',upd);upd();
+  $('#clouds').innerHTML=Array.from({length:6},(_,i)=>`<g transform="translate(0,${70+i*42}) scale(${.8+(i%3)*.25})"><g class="cd" style="animation-duration:${70+i*18}s;animation-delay:-${i*23}s"><ellipse rx="110" ry="34" fill="url(#cg)"/><ellipse cx="70" cy="-18" rx="80" ry="30" fill="url(#cg)"/><ellipse cx="-70" cy="-8" rx="70" ry="26" fill="url(#cg)"/></g></g>`).join('');
+    const E=a=>a.map(([x,y,rx,ry])=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="url(#cg)"/>`).join('');
+    const CL=[[100,150,420,200],[250,420,460,210],[120,700,440,200],[480,260,380,190],[520,620,400,200]];
+
+$('#cl').innerHTML=E(CL);$('#cr').innerHTML=E(CL.map(([x,y,a,b])=>[1600-x,y,a,b]));
+$('#cc').innerHTML=E([[800,120,420,170],[800,450,520,260],[800,780,450,200],[650,330,300,170],[950,560,320,180]]);
+const tree=(x,y,s,i)=>{const sh=`<ellipse cx="-16" cy="6" rx="${i%4?40:50}" ry="7" fill="rgba(0,35,15,.28)"/>`;const body=i%4===3?`<rect x="-5" y="-30" width="10" height="42" fill="#5a3b22"/><circle cx="0" cy="-58" r="34" fill="#3f8f45"/><circle cx="-22" cy="-42" r="24" fill="#357d3b"/><circle cx="22" cy="-44" r="26" fill="#58a850"/><circle cx="8" cy="-70" r="22" fill="#6bbd5c"/>`:`<rect x="-4" y="-10" width="8" height="22" fill="#5a3b22"/><path d="M-36-4L0-60 36-4Z" fill="#256b3d"/><path d="M-30-34L0-90 30-34Z" fill="#2c7f48"/><path d="M-22-64L0-118 22-64Z" fill="#3a9a58"/><path d="M-36-4L0-60 0-4Z M-30-34L0-90 0-34Z M-22-64L0-118 0-64Z" fill="rgba(5,30,25,.28)"/>`;return`<g transform="translate(${x},${y}) scale(${s})">${sh}<g class="tr" style="animation-duration:${3+i%3}s;animation-delay:-${i%7}s">${body}</g></g>`};
+const ts=[];for(let i=0;i<30;i++){const x=i<16?(i*41+15)%560:1040+(i*53)%540;ts.push([x,648+(i*29)%110,.55+(i*13%10)/11,i])}
+ts.sort((a,b)=>a[1]-b[1]);$('#forest').innerHTML=ts.map(a=>tree(...a)).join('');
+
+$('#grass').innerHTML=Array.from({length:140},(_,i)=>{const x=i*11.5+((i*7)%9),y=846+(i%3)*18;return`<path class="bl" d="M${x} ${y}q4-20 ${(i%5)-2} -38" stroke="${i%2?'#2f8a4a':'#3fa05a'}" stroke-width="3" fill="none" stroke-linecap="round" style="transform-origin:${x}px ${y}px;animation-delay:-${(i*.37)%2.4}s"/>`}).join('');
+const deer=(m,dl)=>{const c='#b07a45',d='#8f5f33',w=m==='walk';
+ const legs=[[-30,0],[-20,.7],[22,.7],[32,0]].map(([x,o])=>`<path d="M${x} -50L${x-3} 0" stroke="${d}" stroke-width="6" stroke-linecap="round"${w?` style="transform-origin:${x}px -50px;animation:leg .7s ease-in-out ${-o}s infinite alternate"`:''}/>`).join('');
+ const head=`<g style="transform-origin:28px -70px;animation:${w?'nod 1.4s':'graze 7s'} ease-in-out ${dl}s infinite"><path d="M22-72L44-110 58-104 40-64Z" fill="${c}"/><ellipse cx="61" cy="-106" rx="15" ry="8" transform="rotate(18 61 -106)" fill="${c}"/><circle cx="67" cy="-108" r="2.2" fill="#1a1208"/><circle cx="75" cy="-104" r="2.5" fill="#2a1a10"/><path d="M50-112L44-132M47-122L36-130M47-122L56-134" stroke="#6b4a2f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M49-110L38-120 54-116Z" fill="${d}"/></g>`;
+ return`<ellipse cy="3" rx="46" ry="6" fill="rgba(0,35,15,.3)"/>${legs}<ellipse cy="-62" rx="42" ry="22" fill="${c}"/><ellipse cy="-52" rx="34" ry="11" fill="#d9b387"/><path d="M-30-78Q0-92 30-80" stroke="#8f5f33" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M-40-70l-9-8 3 14z" fill="#f3ead8"/>${head}`};
+$('#deers').innerHTML=`<g transform="translate(0,735) scale(.65)"><g style="animation:walk 95s linear -40s infinite">${deer('walk',0)}</g></g>
+<g transform="translate(700,762) scale(.8)">${deer('graze',-3)}</g><g transform="translate(600,806) scale(1.15)">${deer('graze',0)}</g>
+<g transform="translate(0,812) scale(1.1)"><g style="animation:walk 60s linear -10s infinite">${deer('walk',0)}</g></g>`;
+$('#wind').innerHTML=Array.from({length:9},(_,i)=>`<g style="animation:wind ${6+i%4*2}s linear ${-i*1.7}s infinite;opacity:0"><path d="M0 ${200+i*58}q40-14 80 0t80 0t80 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".7"/></g>`).join('')+Array.from({length:6},(_,i)=>{const y=520+i*45;return`<g style="animation:wind ${8+i*2}s linear ${-i*2.3}s infinite;opacity:0"><ellipse cy="${y}" rx="7" ry="3.5" fill="${i%2?'#d9a441':'#7bbf5a'}" style="transform-origin:0 ${y}px;animation:flip .8s ease-in-out infinite alternate"/></g>`}).join('');
+
+$('#birds').innerHTML=Array.from({length:5},(_,i)=>`<g style="animation:wind ${26+i*7}s linear ${-i*6}s infinite;opacity:0"><g transform="translate(0,${110+i*38}) scale(${1.4-i*.15})"><path class="wing" d="M-12 0Q-6-9 0 0Q6-9 12 0" stroke="#24313b" stroke-width="2.2" fill="none" stroke-linecap="round" style="animation-delay:-${i*.17}s"/></g></g>`).join('');
+$('#stars').innerHTML=Array.from({length:46},(_,i)=>`<circle cx="${(i*131+40)%1600}" cy="${(i*53)%330+10}" r="${1+i%3*.6}" fill="#fff" style="animation:tw ${2+i%4}s ease-in-out ${-i*.3}s infinite alternate"/>`).join('');
+$('#grass').innerHTML+=Array.from({length:70},(_,i)=>i%11===0?`<ellipse cx="${(i*47+90)%1500+30}" cy="${812+(i*17)%70}" rx="${14+i%3*6}" ry="8" fill="#8a9099"/>`:`<circle cx="${(i*29+13)%1600}" cy="${800+(i*37)%90}" r="${2+i%3}" fill="${['#fff','#ffd966','#ff9ec4','#b9a0ff'][i%4]}"/>`).join('');
+
+
+/* zoom */
+function zoomZ(z){const s=$('#scn');if(s.classList.contains('zoom'))return;s.setAttribute('class','zoom zoom-'+z);document.body.classList.add('lock');setTimeout(()=>openP(z),1500)}
+function goZ(z){if(scrollY<innerHeight*.9||scrollY>innerHeight*2.2){scrollTo(0,innerHeight*1.05);setTimeout(()=>zoomZ(z),300)}else zoomZ(z)}
+    $('#mg').addEventListener('click',()=>zoomZ('gunung'));$('#mg').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();zoomZ('gunung')}});
+    $('#toT').onclick=()=>$('#tiket').scrollIntoView({behavior:'smooth'});
+    $('#zc').innerHTML=Object.entries(Z).map(([k,z])=>`<div class="card zc">${fig(FOTO[k],'',z.bg)}<h3>${z.n}</h3><p>${z.d}</p><div class="price">Mulai ${rp(z.t[0][3])}${k==='gunung'?' per hari':''}</div><button class="btn" data-open="${k}">${k==='gunung'?'Lihat gunung dan tiket':'Beli tiket'}</button></div>`).join('');
+      document.addEventListener('click',e=>{const b=e.target.closest('[data-open],[data-sos]');if(!b)return;if(b.dataset.sos!==undefined){openSos();return}const z=b.dataset.open;goZ(z)});
+
+/* tiket */
+let P=null;const cnt=()=>sum(P.q);
+const fresh=z=>({zone:z,date:'',q:{},a:{},nights:1,jalur:'cemara',name:'',phone:'',en:'',ep:'',agree:false,err:'',paying:false});
+function tot(){const z=Z[P.zone],k=kind(P.date),d=P.zone==='gunung'?P.nights+1:1;let t=0;z.t.forEach(x=>t+=(P.q[x[0]]||0)*x[3+k]*d);z.add.forEach(x=>t+=(P.a[x[0]]||0)*x[3]*(x[4]?P.nights:1));return t+(t?2500:0)}
+const row=(a,k,n,d,p,v,mx)=>`<div class="row"><div><b>${n}</b><small>${d}</small><b>${rp(p)}</b></div><div class="qty"><button data-a="${a}" data-k="${k}" data-d="-1" aria-label="Kurangi ${n}" ${v?'':'disabled'}>−</button><span>${v}</span><button data-a="${a}" data-k="${k}" data-d="1" aria-label="Tambah ${n}" ${v>=mx?'disabled':''}>+</button></div></div>`;
+function pr(){const z=Z[P.zone],g=P.zone==='gunung',k=kind(P.date),rem=P.date?remain(P.zone,P.date):0;
+ let h=`<div class="ph"><h2 id="pt" tabindex="-1">${z.n}</h2><button class="x" data-a="close" aria-label="Tutup">✕</button></div><p class="note">${z.d}</p>${fig(FOTO[P.zone],'pfig',z.bg)}${P.err?`<div class="err" role="alert">${esc(P.err)}</div>`:''}
+ <label class="f" for="pdate">Tanggal ${g?'mulai pendakian':'kunjungan'}</label><input type="date" id="pdate" min="${ds(minD(P.zone))}" max="${ds(addD(minD(P.zone),60))}" value="${P.date}">
+ <p class="note">${P.date?`${long(P.date)}. Harga ${k?'akhir pekan atau liburan':'hari biasa'}. Sisa kuota ${rem} orang.`:'Pilih tanggal untuk melihat harga dan kuota.'}</p>`;
+ if(g)h+=`<label class="f" for="pj">Jalur</label><select id="pj">${Object.entries(JL).map(([a,b])=>`<option value="${a}" ${P.jalur===a?'selected':''}>${b}</option>`).join('')}</select><label class="f" for="pn2">Lama pendakian</label><select id="pn2">${[1,2,3].map(n=>`<option value="${n}" ${P.nights===n?'selected':''}>${n} malam (${n+1} hari)</option>`).join('')}</select>`;
+ h+='<h4>Tiket</h4>';z.t.forEach(x=>{const v=P.q[x[0]]||0,mx=!P.date?0:v+Math.max(0,Math.min(rem-cnt(),20-v));h+=row('q',x[0],x[1],x[2],x[3+k],v,mx)});
+ h+='<h4>Tambahan</h4>';z.add.forEach(x=>{const v=P.a[x[0]]||0;h+=row('ad',x[0],x[1],x[2],x[3],v,20)});
+ h+=`<h4>Data pemesan</h4><label class="f" for="pnm">Nama lengkap</label><input type="text" id="pnm" value="${esc(P.name)}" autocomplete="name"><label class="f" for="pph">Nomor WhatsApp</label><input type="tel" id="pph" value="${esc(P.phone)}" placeholder="08xxxxxxxxxx" autocomplete="tel">`;
+ if(g)h+=`<label class="f" for="pen">Nama kontak darurat</label><input type="text" id="pen" value="${esc(P.en)}"><label class="f" for="pep">Nomor kontak darurat</label><input type="tel" id="pep" value="${esc(P.ep)}" placeholder="Nomor orang lain">`;
+ h+=`<label style="display:flex;gap:8px;margin-top:14px;font-size:14px"><input type="checkbox" id="pag" ${P.agree?'checked':''}> ${g?'Saya sehat, tidak sedang sakit, dan siap mendaki sesuai aturan taman.':'Saya setuju dengan aturan kunjungan taman.'}</label>
+ <div class="tot"><span>Total</span><span>${rp(tot())}</span></div><p class="note">Sudah termasuk biaya layanan Rp2.500. Pembayaran disimulasikan.</p>
+ <button class="btn" style="width:100%;margin-top:6px" data-a="pay" ${P.paying?'disabled':''}>${P.paying?'Memproses…':'Bayar sekarang'}</button>`;
+ $('#pn').innerHTML=h;const e=$('#pn .err');if(e)e.scrollIntoView({block:'nearest'})}
+function openP(z){P=fresh(z);pr();$('#pn').classList.add('open');setTimeout(()=>$('#pt').focus(),60)}
+function closeP(){$('#pn').classList.remove('open');$('#scn').removeAttribute('class');document.body.classList.remove('lock')}
+function val(){const g=P.zone==='gunung',n=cnt();
+ if(!P.date)return'Pilih tanggal terlebih dulu.';const r=remain(P.zone,P.date);
+ if(n<1)return'Tambahkan minimal 1 tiket.';if(n>r)return`Kuota tanggal ini tersisa ${r} orang.`;
+ if(!g&&(P.q.ank||0)>0&&(P.q.dew||0)+(P.q.asing||0)===0)return'Anak harus didampingi minimal 1 dewasa.';
+ if(P.name.trim().length<3)return'Isi nama lengkap minimal 3 huruf.';
+ if(!tel(P.phone))return'Nomor WhatsApp tidak valid. Contoh: 081234567890.';
+ if(g){if(P.en.trim().length<3)return'Isi nama kontak darurat.';if(!tel(P.ep))return'Nomor kontak darurat tidak valid.';if(P.ep.replace(/\D/g,'').slice(-9)===P.phone.replace(/\D/g,'').slice(-9))return'Kontak darurat harus nomor orang lain.'}
+ if(!P.agree)return g?'Centang pernyataan kesehatan dan kesiapan mendaki.':'Centang persetujuan aturan kunjungan.';return''}
+function pay(){if(P.paying)return;const e=val();if(e){P.err=e;pr();return}P.paying=true;P.err='';pr();
+ setTimeout(()=>{P.paying=false;if(cnt()>remain(P.zone,P.date)){P.err='Kuota baru saja berubah. Periksa jumlah tiket Anda.';pr();return}
+  const L='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',all=load();let code;do{code='TN-'+Array.from({length:6},()=>L[Math.floor(Math.random()*L.length)]).join('')}while(all.some(o=>o.code===code));
+  const g=P.zone==='gunung',o={code,zone:P.zone,date:P.date,q:{...P.q},a:{...P.a},nights:g?P.nights:0,jalur:g?P.jalur:'',name:P.name.trim(),phone:P.phone,en:g?P.en.trim():'',ep:g?P.ep:'',total:tot(),status:'paid',at:Date.now()};
+  all.push(o);save(all);closeP();ol();showTicket(o);toast('Pembayaran berhasil')},1400)}
+$('#pn').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=b.dataset.a;
+ if(a==='close')closeP();else if(a==='pay')pay();
+ else{const o=a==='q'?P.q:P.a,k=b.dataset.k;o[k]=Math.max(0,(o[k]||0)+(+b.dataset.d));P.err='';pr()}});
+$('#pn').addEventListener('change',e=>{const t=e.target;
+ if(t.id==='pdate'){const v=t.value,mn=ds(minD(P.zone)),mx=ds(addD(minD(P.zone),60));P.err='';
+  if(!v||v<mn||v>mx)P.err='Tanggal harus antara '+long(mn)+' dan '+long(mx)+'.';else if(remain(P.zone,v)<=0)P.err=long(v)+' sudah penuh. Pilih tanggal lain.';else P.date=v;pr()}
+ else if(t.id==='pj'){P.jalur=t.value}else if(t.id==='pn2'){P.nights=+t.value;pr()}else if(t.id==='pag')P.agree=t.checked});
+$('#pn').addEventListener('input',e=>{const t=e.target,m={pnm:'name',pph:'phone',pen:'en',pep:'ep'};if(m[t.id])P[m[t.id]]=t.value});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#pn').classList.contains('open'))closeP()});
+
+
+
+/* e-tiket dan daftar */
+const stat=o=>o.status==='paid'&&o.date<todayS()?'expired':o.status;
+const SL={paid:'Aktif',used:'Sudah dipakai',cancelled:'Dibatalkan',expired:'Kedaluwarsa'};
+const items=o=>{const z=Z[o.zone];return z.t.filter(t=>o.q[t[0]]).map(t=>`${t[1]} × ${o.q[t[0]]}`).concat(z.add.filter(a=>o.a[a[0]]).map(a=>`${a[1]} × ${o.a[a[0]]}`))};
+function showTicket(o){const st=stat(o),d=$('#tkd'),g=o.zone==='gunung';
+  d.innerHTML=`<div class="dh"><h3>${Z[o.zone].n}</h3><code>${o.code}</code></div><div class="db"><div class="qrb" id="qr"></div><p style="text-align:center;margin:0 0 12px"><span class="badge ${st}">${SL[st]}</span></p>
+  <p style="margin:4px 0"><b>${esc(o.name)}</b><br>${long(o.date)}${g?`<br>${JL[o.jalur]}, ${o.nights} malam`:''}</p><ul>${items(o).map(i=>`<li>${i}</li>`).join('')}</ul>${g?`<p class="note">Kontak darurat: ${esc(o.en)} (${esc(o.ep)})</p>`:''}<p class="note">Total dibayar ${rp(o.total)}. Tunjukkan kode QR ke petugas gerbang.</p>
+  <div class="acts"><button class="btn gh" style="flex:1" id="cp">Salin kode</button><button class="btn" style="flex:1" id="cl2">Tutup</button></div></div>`;
+  d.showModal();
+  try{new QRCode($('#qr'),{text:`TAMANCEMARA|${o.code}|${o.zone}|${o.date}|${sum(o.q)}`,width:168,height:168,colorDark:'#10281e',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){$('#qr').innerHTML='<p class="note" style="color:#10281e;margin:0">QR belum bisa dimuat. Tunjukkan kode booking ke petugas.</p>'}
+    $('#cl2').onclick=()=>d.close();$('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(o.code);toast('Kode disalin')}catch(e){toast('Salin manual: '+o.code)}}}
+      $('#tkd').addEventListener('click',e=>{if(e.target.id==='tkd')e.target.close()});
+let arm=null;
+function ol(){const all=load().slice().sort((a,b)=>b.at-a.at),h=$('#ol');
+ if(!all.length){h.innerHTML='<div class="card"><b>Belum ada tiket.</b><p class="note">Tiket yang kamu beli akan muncul di sini.</p></div>';return}
+  h.innerHTML=all.map(o=>{const st=stat(o),can=o.status==='paid'&&o.date>todayS();
+    return`<div class="card ord"><div><b>${o.code}</b> <span class="badge ${st}">${SL[st]}</span><div class="note">${Z[o.zone].n}, ${long(o.date)}</div><div>${items(o).join(', ')}</div><b>${rp(o.total)}</b></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" data-v="${o.code}">Lihat e-tiket</button>${can?`<button class="btn sm gh" data-c="${o.code}">${arm===o.code?'Yakin batalkan?':'Batalkan'}</button>`:''}</div></div>`}).join('')}
+  $('#ol').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const all=load(),o=all.find(x=>x.code===(b.dataset.v||b.dataset.c));if(!o)return;
+    if(b.dataset.v)showTicket(o);else if(arm===o.code){o.status='cancelled';save(all);arm=null;ol();toast('Tiket dibatalkan, dana kembali penuh')}
+      else{arm=o.code;ol();setTimeout(()=>{if(arm===o.code){arm=null;ol()}},4000)}});
+ol();
+
+/* SOS */
+const TY={lost:['Tersesat','Tetap di tempat dan jangan berpindah jauh. Bunyikan peluit tiga kali berulang, hemat baterai ponsel, dan tetap hangat.'],hurt:['Cedera','Hentikan aktivitas, tenangkan korban, tekan luka yang berdarah dengan kain bersih, dan jangan memindahkan korban jika curiga patah tulang.'],fire:['Kebakaran hutan','Menjauh ke arah berlawanan angin dan menuju area terbuka atau sumber air. Jangan mencoba memadamkan api besar sendiri.'],wild:['Satwa liar','Tetap tenang, jangan berlari dan jangan memotret dari dekat. Mundur pelan sambil menjaga jarak dan hadap ke arah satwa.'],storm:['Cuaca buruk','Berlindung di tempat rendah dan jauh dari pohon tinggi atau puncak. Jaga tubuh tetap kering dan hangat.']};
+let sty='',sco='';
+
+  $('#stype').innerHTML=Object.entries(TY).map(([k,v])=>`<label><input type="radio" name="sty" value="${k}"><span>${v[0]}</span></label>`).join('');
+  $('#stype').addEventListener('change',e=>{sty=e.target.value});
+
+  function openSos(){$('#sres').innerHTML='';$('#serr').hidden=true;$('#sosd').showModal()}
+    $('#sclose').onclick=()=>$('#sosd').close();
+    $('#sosd').addEventListener('click',e=>{if(e.target.id==='sosd')e.target.close()});
+    $('#gl').onclick=()=>{const m=$('#locv');m.textContent='Mencari lokasi…';
+      try{navigator.geolocation.getCurrentPosition(p=>{sco=p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5);m.textContent='Lokasi terbagi: '+sco},()=>{sco='';m.textContent='Lokasi tidak bisa diakses. Isi patokan lokasi di bawah.'},{timeout:8000})}catch(e){m.textContent='Lokasi tidak didukung. Isi patokan lokasi di bawah.'}};
+    $('#ssend').onclick=()=>{const er=$('#serr'),loc=$('#sloc').value.trim(),ph=$('#sph').value;let m='';
+      if(!sty)m='Pilih jenis keadaan darurat.';else if(!sco&&loc.length<3)m='Bagikan lokasi atau isi patokan lokasi.';else if(!tel(ph))m='Nomor yang bisa dihubungi tidak valid.';
+      if(m){er.textContent=m;er.hidden=false;return}er.hidden=true;
+ const ref='SOS-'+String(Math.floor(10000+Math.random()*90000));
+  try{const l=JSON.parse(localStorage.getItem('tn_sos')||'[]');l.push({ref,sty,sco,loc,ph,at:Date.now()});localStorage.setItem('tn_sos',JSON.stringify(l))}catch(e){}
+    $('#sres').innerHTML=`<div class="card" style="margin-top:14px"><b>Laporan terkirim (simulasi)</b><p class="note">Nomor laporan <b>${ref}</b>. Dalam layanan sungguhan, petugas jaga akan menghubungi ${esc(ph)}. Jaga ponsel tetap menyala.</p><p style="margin:6px 0 0"><b>Sambil menunggu:</b> ${TY[sty][1]}</p><p class="note">Jika nyawa terancam, telepon <a href="tel:112">112</a> atau <a href="tel:115">115</a> sekarang.</p></div>`};
+const GB=['linear-gradient(135deg,#1f6a3c,#7bbf5a)','linear-gradient(135deg,#2b4a7a,#8fb8e0)','linear-gradient(135deg,#c9a14a,#e8d27c)','linear-gradient(135deg,#6a7f8f,#d5e2ea)'];
+  $('#gal').innerHTML=FOTO.galeri.map((f,i)=>fig(f,'',GB[i%GB.length])).join('');
+(function(){const els=$$('.glass,.content h2,.content .sub,.content .card,.gal .fig,.sosb,footer');
+  els.forEach(e=>{e.classList.add('rv');e.style.setProperty('--i',Math.min(4,[...e.parentNode.children].indexOf(e)))});
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.15});els.forEach(e=>io.observe(e))})();
+
+
+</script>
+</body>
+</html>
